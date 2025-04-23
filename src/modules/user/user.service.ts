@@ -18,7 +18,7 @@ export class UserService {
       throw new DomainException('email ja em uso');
     }
 
-    const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
+    const hashedPassword = bcrypt.hashSync(createUserDto.password, 10);
 
     const user = await this.userRepository.save({
       email: createUserDto.email,
@@ -27,5 +27,13 @@ export class UserService {
     });
 
     return new CreateUserResponseDto(user);
+  }
+
+  async findByEmail(email: string): Promise<User | null> {
+    return await this.userRepository.findOneBy({ email });
+  }
+
+  public verify(user: User, password: string) {
+    return bcrypt.compareSync(password, user.password);
   }
 }
