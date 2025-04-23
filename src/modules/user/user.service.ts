@@ -5,6 +5,7 @@ import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dtos/create-user.dto';
 import { CreateUserResponseDto } from './dtos/create-user-response.dto';
 import { User } from './user.entity';
+import { DomainException } from '../../common/exceptions/domain.exception';
 
 @Injectable()
 export class UserService {
@@ -14,7 +15,7 @@ export class UserService {
     const exist = await this.userRepository.findOneBy({ email: createUserDto.email });
 
     if (exist) {
-      throw new Error('email ja em uso');
+      throw new DomainException('email ja em uso');
     }
 
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
