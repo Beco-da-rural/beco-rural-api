@@ -9,6 +9,7 @@ async function bootstrap() {
     .setTitle('Beco da rural')
     .setDescription('API de classificados')
     .setVersion('1.0')
+    .addBearerAuth()
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
