@@ -11,6 +11,7 @@ export class UserController {
   @ApiCreatedResponse({ type: CreateUserResponseDto })
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
-    return this.userService.createUser(createUserDto);
+    const user = await this.userService.createUser(createUserDto);
+    return new CreateUserResponseDto(user);
   }
 }

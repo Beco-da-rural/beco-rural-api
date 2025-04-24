@@ -3,7 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dtos/create-user.dto';
-import { CreateUserResponseDto } from './dtos/create-user-response.dto';
 import { User } from './user.entity';
 import { DomainException } from '../../common/exceptions/domain.exception';
 
@@ -11,7 +10,7 @@ import { DomainException } from '../../common/exceptions/domain.exception';
 export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<CreateUserResponseDto> {
+  async createUser(createUserDto: CreateUserDto): Promise<User> {
     const exist = await this.userRepository.findOneBy({ email: createUserDto.email });
 
     if (exist) {
@@ -20,13 +19,11 @@ export class UserService {
 
     const hashedPassword = bcrypt.hashSync(createUserDto.password, 10);
 
-    const user = await this.userRepository.save({
+    return await this.userRepository.save({
       email: createUserDto.email,
       name: createUserDto.name,
       password: hashedPassword,
     });
-
-    return new CreateUserResponseDto(user);
   }
 
   async findByEmail(email: string): Promise<User | null> {
