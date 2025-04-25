@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
 import { InjectRepository } from '@nestjs/typeorm';
+import { DomainException } from '@common/exceptions/domain.exception';
 import { Category } from './category.entity';
 import { CreateCategoryDto } from './dtos/create-category.dto';
-import { DomainException } from 'src/common/exceptions/domain.exception';
 
 @Injectable()
 export class CategoryService {
