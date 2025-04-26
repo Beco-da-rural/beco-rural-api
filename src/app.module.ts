@@ -1,13 +1,11 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
-import { typeOrmConfig } from '@config/typeorm.config';
-import { UserModule } from '@modules/user/user.module';
-import { AuthModule } from '@modules/auth/auth.module';
-import { CategoryModule } from '@modules/category/category.module';
-import { ListingController } from './modules/listing/listing.controller';
-import { ListingService } from './modules/listing/listing.service';
+import { typeOrmConfig } from './config/typeorm.config';
 import { ListingModule } from './modules/listing/listing.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { CategoryModule } from './modules/category/category.module';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -18,7 +16,7 @@ import { ListingModule } from './modules/listing/listing.module';
     CategoryModule,
     ListingModule,
   ],
-  controllers: [ListingController],
-  providers: [ListingService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}
