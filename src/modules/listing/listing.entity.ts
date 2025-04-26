@@ -1,6 +1,6 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { Category } from '@modules/category/category.entity';
-import { User } from '@modules/user/user.entity';
+import { Category } from '../category/category.entity';
+import { User } from '../user/user.entity';
 
 @Entity()
 export class Listing {
