@@ -20,4 +20,8 @@ export class CategoryService {
       name: categoryRequest.name,
     });
   }
+
+  async listAll() {
+    return await this.categoryRepository.find();
+  }
 }
