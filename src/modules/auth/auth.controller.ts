@@ -1,11 +1,11 @@
 import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
+import { GoogleAuthGuard } from '@app/common/guards/google-auth.guard';
+import { ZodPipe } from '@app/common/pipe/zod.pipe';
+import { User } from '../user/user.entity';
 import { AuthService } from './auth.service';
 import { LoginResponseDto } from './dtos/login-response.dto';
 import { LoginDto, loginSchema } from './dtos/login.dto';
-import { GoogleAuthGuard } from '@app/common/guards/google-auth.guard';
-import { User } from '../user/user.entity';
-import { ZodPipe } from '@app/common/pipe/zod.pipe';
 
 @Controller('auth')
 export class AuthController {
@@ -22,6 +22,7 @@ export class AuthController {
   @UseGuards(GoogleAuthGuard)
   async loginGoogle() {}
 
+  @ApiOkResponse({ type: LoginResponseDto })
   @Get('google/redirect')
   @UseGuards(GoogleAuthGuard)
   redirectGoogle(@Req() req: { user: User }) {
