@@ -5,20 +5,20 @@ import { User } from '../user/user.entity';
 @Entity()
 export class Listing {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  title: string;
+  title!: string;
 
   @Column()
-  description: string;
+  description!: string;
 
   @ManyToOne(() => User, (user) => user.listings, { onDelete: 'CASCADE' })
-  user: User;
+  user!: User;
 
   @ManyToOne(() => Category, (category) => category.listings, { onDelete: 'SET NULL' })
-  category: Category;
+  category!: Category;
 
   @CreateDateColumn({ name: 'created_at' })
-  createdAt: Date;
+  createdAt!: Date;
 }

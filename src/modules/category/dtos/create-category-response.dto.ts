@@ -2,10 +2,10 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Category } from '../category.entity';
 
 export class CreateCategoryResponseDto {
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'categoria' })
   name: string;
 
   constructor(category: Category) {

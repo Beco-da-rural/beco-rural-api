@@ -2,13 +2,13 @@ import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user.entity';
 
 export class CreateUserResponseDto {
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'John' })
   name: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'john@email.com' })
   email: string;
 
   constructor(user: User) {

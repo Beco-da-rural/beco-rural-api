@@ -2,19 +2,19 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Listing } from '../listing.entity';
 
 export class CreateListingResponseDto {
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   id: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'anuncio' })
   title: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 'descrição' })
   description: string;
 
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   userId: number;
 
-  @ApiProperty()
+  @ApiProperty({ default: 1 })
   categoryId: number;
 
   @ApiProperty()

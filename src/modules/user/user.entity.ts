@@ -4,17 +4,17 @@ import { Listing } from '../listing/listing.entity';
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
-  id: number;
+  id!: number;
 
   @Column()
-  name: string;
+  name!: string;
 
   @Column({ unique: true })
-  email: string;
+  email!: string;
 
   @Column({ nullable: true })
-  password: string;
+  password!: string;
 
   @OneToMany(() => Listing, (listing) => listing.user)
-  listings: Listing[];
+  listings!: Listing[];
 }

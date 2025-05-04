@@ -1,15 +1,16 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { User } from '../user.entity';
+import { z } from 'zod';
 
 export class CreateUserDto {
-  @ApiProperty()
-  name: string;
+  @ApiProperty({ default: 'John' })
+  name!: string;
 
-  @ApiProperty()
-  password: string;
+  @ApiProperty({ default: '12345678' })
+  password!: string;
 
-  @ApiProperty()
-  email: string;
+  @ApiProperty({ default: 'john@email.com' })
+  email!: string;
 
   toUser(): User {
     const user = new User();
@@ -21,3 +22,11 @@ export class CreateUserDto {
     return user;
   }
 }
+
+export const createUserSchema = z
+  .object({
+    name: z.string().nonempty(),
+    passwrod: z.string().nonempty(),
+    email: z.string().email(),
+  })
+  .strict();
