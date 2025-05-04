@@ -16,7 +16,5 @@ import { UserModule } from './modules/user/user.module';
     CategoryModule,
     ListingModule,
   ],
-  controllers: [],
-  providers: [],
 })
 export class AppModule {}
