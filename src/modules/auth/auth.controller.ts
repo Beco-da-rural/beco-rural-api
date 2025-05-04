@@ -11,6 +11,7 @@ export class AuthController {
   @ApiOkResponse({ type: LoginResponseDto })
   @Post('login')
   async login(@Body() body: LoginDto): Promise<LoginResponseDto> {
-    return this.authService.authenticate(body.email, body.password);
+    const token = await this.authService.authenticate(body.email, body.password);
+    return new LoginResponseDto(token);
   }
 }

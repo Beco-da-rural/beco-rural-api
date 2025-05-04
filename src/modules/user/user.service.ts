@@ -26,8 +26,14 @@ export class UserService {
     });
   }
 
-  async findByEmail(email: string): Promise<User | null> {
-    return await this.userRepository.findOneBy({ email });
+  async findByEmail(email: string): Promise<User> {
+    const user = await this.userRepository.findOneBy({ email });
+
+    if (!user) {
+      throw new DomainException('usuario não encontrado');
+    }
+
+    return user;
   }
 
   public verify(user: User, password: string) {
