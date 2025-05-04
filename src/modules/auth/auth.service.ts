@@ -13,18 +13,22 @@ export class AuthService {
   async authenticate(email: string, password: string): Promise<string> {
     const user = await this.getUserOrThrow(email);
 
-    if (this.userService.verify(user, password)) {
+    if (!this.userService.verify(user, password)) {
       throw new UnauthorizedException();
     }
 
-    return this.jwtService.sign({ sub: user.id });
+    return this.createTokenJwt(user);
   }
 
-  async getUserOrThrow(email: string): Promise<User> {
+  private async getUserOrThrow(email: string): Promise<User> {
     try {
       return await this.userService.findByEmail(email);
     } catch {
       throw new UnauthorizedException();
     }
+  }
+
+  createTokenJwt(user: User): string {
+    return this.jwtService.sign({ sub: user.id });
   }
 }

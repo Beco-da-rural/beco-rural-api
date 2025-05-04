@@ -2,7 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { CreateUserDto } from './dtos/create-user.dto';
 import { User } from './user.entity';
 import { DomainException } from '@app/common/exceptions/domain.exception';
 
@@ -10,20 +9,18 @@ import { DomainException } from '@app/common/exceptions/domain.exception';
 export class UserService {
   constructor(@InjectRepository(User) private userRepository: Repository<User>) {}
 
-  async createUser(createUserDto: CreateUserDto): Promise<User> {
-    const exist = await this.userRepository.findOneBy({ email: createUserDto.email });
+  async createUser(user: User): Promise<User> {
+    const exist = await this.userRepository.findOneBy({ email: user.email });
 
     if (exist) {
       throw new DomainException('email ja em uso');
     }
 
-    const hashedPassword = bcrypt.hashSync(createUserDto.password, 10);
+    if (user.password) {
+      user.password = bcrypt.hashSync(user.password, 10);
+    }
 
-    return await this.userRepository.save({
-      email: createUserDto.email,
-      name: createUserDto.name,
-      password: hashedPassword,
-    });
+    return await this.userRepository.save(user);
   }
 
   async findByEmail(email: string): Promise<User> {
