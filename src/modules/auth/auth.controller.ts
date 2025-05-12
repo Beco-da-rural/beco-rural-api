@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { GoogleAuthGuard } from '@app/common/guards/google-auth.guard';
 import { ZodPipe } from '@app/common/pipe/zod.pipe';
@@ -12,6 +12,7 @@ export class AuthController {
   constructor(private authService: AuthService) {}
 
   @ApiOkResponse({ type: LoginResponseDto })
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body(new ZodPipe(loginSchema)) body: LoginDto): Promise<LoginResponseDto> {
     const token = await this.authService.authenticate(body.email, body.password);
